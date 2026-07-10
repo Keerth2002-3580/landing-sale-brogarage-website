@@ -103,15 +103,79 @@ export default function Listings() {
   };
 
   return (
-    <div className="relative min-h-[calc(100vh-64px)] flex flex-col">
+    <div className="relative min-h-[calc(100vh-64px)] flex flex-col bg-[#ebf9f0] dark:bg-[#07130e] transition-colors">
       {/* Premium Hero Banner */}
-      <div className="bg-gradient-to-r from-emerald-950 via-emerald-900 to-emerald-850 text-white pt-32 pb-16 px-6 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-green-500/15 via-transparent to-transparent pointer-events-none" />
+      <div className="relative overflow-hidden pt-32 pb-16 px-6" style={{ background: '#001a0f' }}>
+
+        {/* ── Scrolling Background Images ── */}
+        <div className="absolute inset-0 overflow-hidden">
+          {/* Row 1 — scrolls left → right */}
+          <div
+            className="absolute top-0 left-0 flex h-1/2"
+            style={{ animation: 'hero-marquee 35s linear infinite', width: 'max-content' }}
+          >
+            {[
+              'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=700&q=80',
+              'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=700&q=80',
+              'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=700&q=80',
+              'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=700&q=80',
+              'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80',
+              /* duplicate for seamless loop */
+              'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=700&q=80',
+              'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=700&q=80',
+              'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=700&q=80',
+              'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=700&q=80',
+              'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80',
+            ].map((src, i) => (
+              <img key={i} src={src} alt="" className="h-full object-cover shrink-0 opacity-65" style={{ width: '320px' }} loading="lazy" />
+            ))}
+          </div>
+
+          {/* Row 2 — scrolls right → left (opposite direction) */}
+          <div
+            className="absolute bottom-0 left-0 flex h-1/2"
+            style={{ animation: 'hero-marquee-rev 40s linear infinite', width: 'max-content' }}
+          >
+            {[
+              'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=700&q=80',
+              'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=700&q=80',
+              'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=700&q=80',
+              'https://images.unsplash.com/photo-1416331108676-a22ccb276e35?w=700&q=80',
+              'https://images.unsplash.com/photo-1464082354059-27db6ce50048?w=700&q=80',
+              /* duplicate */
+              'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=700&q=80',
+              'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=700&q=80',
+              'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=700&q=80',
+              'https://images.unsplash.com/photo-1416331108676-a22ccb276e35?w=700&q=80',
+              'https://images.unsplash.com/photo-1464082354059-27db6ce50048?w=700&q=80',
+            ].map((src, i) => (
+              <img key={i} src={src} alt="" className="h-full object-cover shrink-0 opacity-55" style={{ width: '320px' }} loading="lazy" />
+            ))}
+          </div>
+
+          {/* Dark gradient overlay — makes text readable */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[#001a0f]/80 via-[#002d1a]/60 to-[#001a0f]/80 pointer-events-none" />
+          {/* Vignette edges */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,#001a0f_90%)] pointer-events-none" />
+        </div>
+
+        {/* CSS keyframes for hero */}
+        <style>{`
+          @keyframes hero-marquee {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+          @keyframes hero-marquee-rev {
+            0%   { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+          }
+        `}</style>
+
         <div className="max-w-7xl mx-auto relative z-10 space-y-3">
           <span className="text-[10px] font-black uppercase tracking-widest text-green-400 bg-green-500/10 px-3 py-1 rounded-full border border-green-500/20 inline-block">
             Sri Lanka Premium Zoned Catalog
           </span>
-          <h1 className="text-3xl sm:text-4.5xl font-black tracking-tight leading-tight">
+          <h1 className="text-3xl sm:text-4.5xl font-black tracking-tight leading-tight text-white">
             Discover Verified Land Listings
           </h1>
           <p className="text-sm text-green-100/90 max-w-2xl leading-relaxed">
