@@ -271,7 +271,7 @@ export default function Listings() {
               )}
               <button
                 onClick={() => setShowSortDropdown(!showSortDropdown)}
-                className="flex items-center gap-2 px-3.5 py-2 border border-gray-200 dark:border-gray-800 rounded-xl text-xs font-extrabold bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-850 shadow-sm transition-all z-30 relative"
+                className="flex items-center justify-between w-44 px-3.5 py-2 border border-gray-200 dark:border-gray-800 rounded-xl text-xs font-extrabold bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-850 shadow-sm transition-all z-30 relative"
               >
                 <span>
                   {sort === 'createdAt:desc' && 'Newest First'}
