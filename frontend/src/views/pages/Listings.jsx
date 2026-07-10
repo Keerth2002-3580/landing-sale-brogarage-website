@@ -103,9 +103,9 @@ export default function Listings() {
   };
 
   return (
-    <div className="relative min-h-[calc(100vh-64px)] flex flex-col pt-24">
+    <div className="relative min-h-[calc(100vh-64px)] flex flex-col">
       {/* Premium Hero Banner */}
-      <div className="bg-gradient-to-r from-emerald-950 via-emerald-900 to-emerald-850 text-white py-12 px-6 relative overflow-hidden">
+      <div className="bg-gradient-to-r from-emerald-950 via-emerald-900 to-emerald-850 text-white pt-32 pb-16 px-6 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-green-500/15 via-transparent to-transparent pointer-events-none" />
         <div className="max-w-7xl mx-auto relative z-10 space-y-3">
           <span className="text-[10px] font-black uppercase tracking-widest text-green-400 bg-green-500/10 px-3 py-1 rounded-full border border-green-500/20 inline-block">

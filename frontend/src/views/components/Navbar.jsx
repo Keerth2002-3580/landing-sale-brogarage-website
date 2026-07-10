@@ -10,7 +10,7 @@ export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const hasHero = location.pathname === '/' || location.pathname === '/verified-sellers';
+  const hasHero = location.pathname === '/' || location.pathname === '/verified-sellers' || location.pathname === '/listings';
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
