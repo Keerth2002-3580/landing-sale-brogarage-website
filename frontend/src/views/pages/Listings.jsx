@@ -185,7 +185,7 @@ export default function Listings() {
       </div>
 
       {/* Quick Category tabs & Controls */}
-      <div className="bg-white dark:bg-gray-950 border-b border-gray-150 dark:border-gray-900 transition-colors py-3 sticky top-[64px] z-20">
+      <div className="bg-[#ebf9f0]/95 dark:bg-[#07130e]/95 backdrop-blur-md border-b border-green-500/10 dark:border-green-800/20 transition-colors py-3 sticky top-[64px] z-20">
         <div className="max-w-7xl mx-auto px-4 lg:px-6 flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-2 overflow-x-auto scrollbar-none pb-1 sm:pb-0">
             <button
