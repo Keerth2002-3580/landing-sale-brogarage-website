@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import LandCard from '../components/LandCard';
 import MapView from '../components/MapView';
-import { Search, SlidersHorizontal, MapPin, Grid, Map as MapIcon, X } from 'lucide-react';
+import { Search, SlidersHorizontal, MapPin, Grid, Map as MapIcon, X, ChevronDown } from 'lucide-react';
 
 export default function Listings() {
   const { API_URL } = useAuth();
@@ -14,6 +14,7 @@ export default function Listings() {
   const [viewMode, setViewMode] = useState('split'); // split, list, map
   const [showMap, setShowMap] = useState(true);
   const [pagination, setPagination] = useState({ page: 1, pages: 1, total: 0, limit: 12 });
+  const [showSortDropdown, setShowSortDropdown] = useState(false);
 
   // Filters State
   const [search, setSearch] = useState(searchParams.get('search') || '');
@@ -263,22 +264,55 @@ export default function Listings() {
               Filters
             </button>
 
-            <select
-              value={sort}
-              onChange={(e) => {
-                setSort(e.target.value);
-                const updatedParams = Object.fromEntries(searchParams);
-                updatedParams.sort = e.target.value;
-                setSearchParams(updatedParams);
-              }}
-              className="px-3.5 py-2 border border-gray-200 dark:border-gray-800 rounded-xl text-xs font-extrabold bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 focus:ring-0 focus:outline-none"
-            >
-              <option value="createdAt:desc">Newest First</option>
-              <option value="price:asc">Price: Low to High</option>
-              <option value="price:desc">Price: High to Low</option>
-              <option value="size:asc">Size: Small to Large</option>
-              <option value="size:desc">Size: Large to Small</option>
-            </select>
+            {/* Custom Sort Dropdown */}
+            <div className="relative">
+              {showSortDropdown && (
+                <div className="fixed inset-0 z-20" onClick={() => setShowSortDropdown(false)} />
+              )}
+              <button
+                onClick={() => setShowSortDropdown(!showSortDropdown)}
+                className="flex items-center gap-2 px-3.5 py-2 border border-gray-200 dark:border-gray-800 rounded-xl text-xs font-extrabold bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-850 shadow-sm transition-all z-30 relative"
+              >
+                <span>
+                  {sort === 'createdAt:desc' && 'Newest First'}
+                  {sort === 'price:asc' && 'Price: Low to High'}
+                  {sort === 'price:desc' && 'Price: High to Low'}
+                  {sort === 'size:asc' && 'Size: Small to Large'}
+                  {sort === 'size:desc' && 'Size: Large to Small'}
+                </span>
+                <ChevronDown className={`w-3.5 h-3.5 text-gray-500 transition-transform duration-200 ${showSortDropdown ? 'rotate-180' : ''}`} />
+              </button>
+
+              {showSortDropdown && (
+                <div className="absolute right-0 mt-1.5 w-48 bg-white dark:bg-gray-900 border border-gray-150 dark:border-gray-800 rounded-2xl shadow-xl z-30 py-1.5 overflow-hidden animate-in fade-in slide-in-from-top-1 duration-100">
+                  {[
+                    { value: 'createdAt:desc', label: 'Newest First' },
+                    { value: 'price:asc', label: 'Price: Low to High' },
+                    { value: 'price:desc', label: 'Price: High to Low' },
+                    { value: 'size:asc', label: 'Size: Small to Large' },
+                    { value: 'size:desc', label: 'Size: Large to Small' },
+                  ].map((opt) => (
+                    <button
+                      key={opt.value}
+                      onClick={() => {
+                        setSort(opt.value);
+                        const updatedParams = Object.fromEntries(searchParams);
+                        updatedParams.sort = opt.value;
+                        setSearchParams(updatedParams);
+                        setShowSortDropdown(false);
+                      }}
+                      className={`w-full text-left px-4.5 py-2.5 text-xs font-bold transition-colors ${
+                        sort === opt.value
+                          ? 'bg-green-600 text-white'
+                          : 'text-gray-700 dark:text-gray-200 hover:bg-green-50 dark:hover:bg-green-950/20 hover:text-green-700 dark:hover:text-green-400'
+                      }`}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
 
             {/* Mobile View Mode switcher */}
             <div className="flex bg-gray-100 dark:bg-gray-900 p-0.5 rounded-xl border border-gray-200 dark:border-gray-800 lg:hidden">
