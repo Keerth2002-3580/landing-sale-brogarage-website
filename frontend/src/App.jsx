@@ -6,6 +6,7 @@ import { AuthProvider } from './context/AuthContext';
 import Navbar from './views/components/Navbar';
 import Footer from './views/components/Footer';
 import LoginModal from './views/components/LoginModal';
+import ScrollToTop from './views/components/ScrollToTop';
 
 // ── MVC: Views — Pages ────────────────────────────────────────────────────────
 import Home from './views/pages/Home';
@@ -24,6 +25,9 @@ export default function App() {
     <AuthProvider>
       <Router>
         <div className="flex flex-col min-h-screen">
+          {/* Scroll to top on every route change */}
+          <ScrollToTop />
+
           {/* Login Modal - Global */}
           <LoginModal />
 
