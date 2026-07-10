@@ -120,7 +120,7 @@ export default function VerifiedSellers() {
               'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=700&q=80',
               'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80',
             ].map((src, i) => (
-              <img key={i} src={src} alt="" className="h-full object-cover shrink-0 opacity-40" style={{ width: '320px' }} loading="lazy" />
+              <img key={i} src={src} alt="" className="h-full object-cover shrink-0 opacity-65" style={{ width: '320px' }} loading="lazy" />
             ))}
           </div>
 
@@ -142,14 +142,14 @@ export default function VerifiedSellers() {
               'https://images.unsplash.com/photo-1416331108676-a22ccb276e35?w=700&q=80',
               'https://images.unsplash.com/photo-1464082354059-27db6ce50048?w=700&q=80',
             ].map((src, i) => (
-              <img key={i} src={src} alt="" className="h-full object-cover shrink-0 opacity-30" style={{ width: '320px' }} loading="lazy" />
+              <img key={i} src={src} alt="" className="h-full object-cover shrink-0 opacity-55" style={{ width: '320px' }} loading="lazy" />
             ))}
           </div>
 
           {/* Dark gradient overlay — makes text readable */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#001a0f]/90 via-[#002d1a]/80 to-[#001a0f]/90 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[#001a0f]/80 via-[#002d1a]/60 to-[#001a0f]/80 pointer-events-none" />
           {/* Vignette edges */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,#001a0f_100%)] pointer-events-none" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,#001a0f_90%)] pointer-events-none" />
         </div>
 
         {/* CSS keyframes for hero */}
