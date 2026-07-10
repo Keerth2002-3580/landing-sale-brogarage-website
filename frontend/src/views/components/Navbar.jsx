@@ -10,11 +10,11 @@ export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const isHome = location.pathname === '/';
+  const hasHero = location.pathname === '/' || location.pathname === '/verified-sellers';
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    if (!isHome) {
+    if (!hasHero) {
       setIsScrolled(false);
       return;
     }
@@ -32,7 +32,7 @@ export default function Navbar() {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [isHome]);
+  }, [hasHero]);
 
   const handleLogout = () => {
     logout();
@@ -40,7 +40,7 @@ export default function Navbar() {
     setIsOpen(false);
   };
 
-  const isTransparent = isHome && !isScrolled;
+  const isTransparent = hasHero && !isScrolled;
 
   // Single floating pill style
   const navContainerClass = `fixed z-50 transition-all duration-500 ease-in-out left-1/2 -translate-x-1/2 w-full max-w-7xl px-4 sm:px-6 lg:px-8 ${
