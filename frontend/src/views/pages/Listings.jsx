@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import LandCard from '../components/LandCard';
 import MapView from '../components/MapView';
 import { Search, SlidersHorizontal, MapPin, Grid, Map as MapIcon, X } from 'lucide-react';

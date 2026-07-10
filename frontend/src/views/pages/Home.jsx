@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Search, MapPin, LandPlot, ShieldCheck, Building2, Trees, Sparkles, Phone, ArrowRight, ChevronDown, ChevronUp, HelpCircle, CheckCircle2, MessageSquare, Map, TrendingUp, Compass, Eye, Star, Wifi, Calculator, Info } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import LandCard from '../components/LandCard';
 
 const PROVINCES_DATA = [

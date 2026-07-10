@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, ShieldCheck, Phone, Mail, ChevronLeft, Building, Sparkles, X, MapPin, LandPlot, ExternalLink, ArrowRight } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import LandCard from '../components/LandCard';
 
 export default function VerifiedSellers() {

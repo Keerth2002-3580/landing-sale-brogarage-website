@@ -1,21 +1,23 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import LoginModal from './components/LoginModal';
 
-// Pages
-import Home from './pages/Home';
-import Listings from './pages/Listings';
-import ListingDetails from './pages/ListingDetails';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Profile from './pages/Profile';
-import Contact from './pages/Contact';
-import Districts from './pages/Districts';
-import VerifiedSellers from './pages/VerifiedSellers';
-import AuthCallback from './pages/AuthCallback';
+// ── MVC: Views — Components ───────────────────────────────────────────────────
+import Navbar from './views/components/Navbar';
+import Footer from './views/components/Footer';
+import LoginModal from './views/components/LoginModal';
+
+// ── MVC: Views — Pages ────────────────────────────────────────────────────────
+import Home from './views/pages/Home';
+import Listings from './views/pages/Listings';
+import ListingDetails from './views/pages/ListingDetails';
+import Login from './views/pages/Login';
+import Register from './views/pages/Register';
+import Profile from './views/pages/Profile';
+import Contact from './views/pages/Contact';
+import Districts from './views/pages/Districts';
+import VerifiedSellers from './views/pages/VerifiedSellers';
+import AuthCallback from './views/pages/AuthCallback';
 
 export default function App() {
   return (

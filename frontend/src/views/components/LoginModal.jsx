@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import {
   Mail, Lock, AlertCircle, X, ArrowLeft,
   Eye, EyeOff, CheckCircle2, LandPlot,

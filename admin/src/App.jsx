@@ -1,59 +1,47 @@
 import React, { useState, useEffect } from 'react';
-import AdminLogin from './pages/AdminLogin';
-import Sidebar from './components/Sidebar';
 
-// Subpages
-import Overview from './pages/Overview';
-import LandApproval from './pages/LandApproval';
-import UserManagement from './pages/UserManagement';
-import AgentManagement from './pages/AgentManagement';
-import PaymentTracking from './pages/PaymentTracking';
-import SiteSettings from './pages/SiteSettings';
+// ── MVC: Controller ───────────────────────────────────────────────────────────
+import {
+  validateToken,
+  handleLoginSuccess,
+  handleLogout,
+  loadAdminUser,
+} from './controllers/adminController';
+
+// ── MVC: Views — Components ───────────────────────────────────────────────────
+import Sidebar from './views/components/Sidebar';
+
+// ── MVC: Views — Pages ────────────────────────────────────────────────────────
+import AdminLogin from './views/pages/AdminLogin';
+import Overview from './views/pages/Overview';
+import LandApproval from './views/pages/LandApproval';
+import UserManagement from './views/pages/UserManagement';
+import AgentManagement from './views/pages/AgentManagement';
+import PaymentTracking from './views/pages/PaymentTracking';
+import SiteSettings from './views/pages/SiteSettings';
 
 export default function App() {
   const [token, setToken] = useState(localStorage.getItem('adminToken') || null);
   const [user, setUser] = useState(null);
   const [activeTab, setActiveTab] = useState('overview');
 
+  // ── Load admin user from localStorage on init ─────────────────────────────
   useEffect(() => {
-    const savedUser = localStorage.getItem('adminUser');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
+    loadAdminUser(setUser);
   }, [token]);
 
-  // Auto-validate token on mount/startup
+  // ── Validate token against backend on startup ─────────────────────────────
   useEffect(() => {
-    if (token) {
-      fetch('http://localhost:5000/api/admin/dashboard-stats', {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        if (!res.ok) {
-          // Token is expired, invalid, or database was re-seeded
-          handleLogout();
-        }
-      })
-      .catch((err) => {
-        console.error('Token validation failed:', err);
-      });
-    }
+    validateToken(token, () => handleLogout(setToken, setUser));
   }, [token]);
 
-  const handleLoginSuccess = (newToken, newUser) => {
-    setToken(newToken);
-    setUser(newUser);
-  };
+  const onLoginSuccess = (newToken, newUser) =>
+    handleLoginSuccess(newToken, newUser, setToken, setUser);
 
-  const handleLogout = () => {
-    localStorage.removeItem('adminToken');
-    localStorage.removeItem('adminUser');
-    setToken(null);
-    setUser(null);
-  };
+  const onLogout = () => handleLogout(setToken, setUser);
 
   if (!token) {
-    return <AdminLogin onLoginSuccess={handleLoginSuccess} />;
+    return <AdminLogin onLoginSuccess={onLoginSuccess} />;
   }
 
   return (
@@ -63,17 +51,17 @@ export default function App() {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         adminUser={user}
-        onLogout={handleLogout}
+        onLogout={onLogout}
       />
 
       {/* Main dashboard viewport */}
       <main className="flex-grow p-8 max-h-screen overflow-y-auto">
-        {activeTab === 'overview' && <Overview adminToken={token} />}
-        {activeTab === 'lands' && <LandApproval adminToken={token} />}
-        {activeTab === 'users' && <UserManagement adminToken={token} />}
-        {activeTab === 'agents' && <AgentManagement adminToken={token} />}
-        {activeTab === 'payments' && <PaymentTracking adminToken={token} />}
-        {activeTab === 'settings' && <SiteSettings adminToken={token} />}
+        {activeTab === 'overview'  && <Overview adminToken={token} />}
+        {activeTab === 'lands'     && <LandApproval adminToken={token} />}
+        {activeTab === 'users'     && <UserManagement adminToken={token} />}
+        {activeTab === 'agents'    && <AgentManagement adminToken={token} />}
+        {activeTab === 'payments'  && <PaymentTracking adminToken={token} />}
+        {activeTab === 'settings'  && <SiteSettings adminToken={token} />}
       </main>
     </div>
   );

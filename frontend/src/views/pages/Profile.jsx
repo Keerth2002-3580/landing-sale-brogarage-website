@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import { User, LandPlot, Heart, MessageSquare, PlusCircle, ShieldCheck, Mail, Phone, Trash2, CheckCircle, Check, Send, Sparkles, MapPin, DollarSign, Ruler, Tag, FileText, Image as ImageIcon, Zap, Droplets, Wifi, FlameKindling, AlertTriangle, Navigation, X } from 'lucide-react';
 import LandCard from '../components/LandCard';
 import io from 'socket.io-client';

@@ -1,4 +1,18 @@
+/**
+ * Context: AuthContext.jsx
+ * MVC Layer: Context (thin bridge between Controller and View)
+ * Responsibility: Provides global auth state to all React components.
+ * Delegates all business logic to authController.js.
+ */
+
 import React, { createContext, useState, useEffect, useContext } from 'react';
+import {
+  loadUser,
+  handleRegister,
+  handleLogin,
+  handleUpdateProfile,
+  handleToggleFavorite,
+} from '../controllers/authController';
 
 const AuthContext = createContext();
 
@@ -11,10 +25,11 @@ export const AuthProvider = ({ children }) => {
   const [darkMode, setDarkMode] = useState(localStorage.getItem('darkMode') === 'true');
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [authModalMode, setAuthModalMode] = useState('login'); // 'login' or 'register'
-  const [defaultRole, setDefaultRole] = useState('user'); // 'user' or 'agent'
+  const [defaultRole, setDefaultRole] = useState('user');
 
   const API_URL = 'http://localhost:5000/api';
 
+  // ── Modal helpers ──────────────────────────────────────────────────────────
   const openLoginModal = () => {
     setAuthModalMode('login');
     setLoginModalOpen(true);
@@ -26,6 +41,7 @@ export const AuthProvider = ({ children }) => {
   };
   const closeLoginModal = () => setLoginModalOpen(false);
 
+  // ── Dark mode ──────────────────────────────────────────────────────────────
   useEffect(() => {
     if (darkMode) {
       document.body.classList.add('dark');
@@ -35,73 +51,19 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('darkMode', darkMode);
   }, [darkMode]);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      if (!token) {
-        setLoading(false);
-        return;
-      }
-      try {
-        const res = await fetch(`${API_URL}/auth/me`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const data = await res.json();
-        if (data.success) {
-          setUser(data.data);
-        } else {
-          logout();
-        }
-      } catch (err) {
-        console.error('Error fetching user:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const toggleDarkMode = () => setDarkMode(!darkMode);
 
-    fetchUser();
+  // ── Load user on mount / token change ─────────────────────────────────────
+  useEffect(() => {
+    loadUser(token, setUser, setLoading, logout);
   }, [token]);
 
-  const register = async (name, email, password, phone, role) => {
-    try {
-      const res = await fetch(`${API_URL}/auth/register`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password, phone, role }),
-      });
-      const data = await res.json();
-      if (data.success) {
-        localStorage.setItem('token', data.token);
-        setToken(data.token);
-        setUser(data.user);
-        return { success: true };
-      }
-      return { success: false, error: data.error };
-    } catch (err) {
-      return { success: false, error: 'Server connection failed' };
-    }
-  };
+  // ── Auth actions (delegate to Controller) ─────────────────────────────────
+  const register = (name, email, password, phone, role) =>
+    handleRegister({ name, email, password, phone, role }, setToken, setUser);
 
-  const login = async (email, password) => {
-    try {
-      const res = await fetch(`${API_URL}/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await res.json();
-      if (data.success) {
-        localStorage.setItem('token', data.token);
-        setToken(data.token);
-        setUser(data.user);
-        return { success: true };
-      }
-      return { success: false, error: data.error };
-    } catch (err) {
-      return { success: false, error: 'Server connection failed' };
-    }
-  };
+  const login = (email, password) =>
+    handleLogin(email, password, setToken, setUser);
 
   const logout = () => {
     localStorage.removeItem('token');
@@ -109,47 +71,13 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
-  const updateProfile = async (profileData) => {
-    try {
-      const res = await fetch(`${API_URL}/auth/profile`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(profileData),
-      });
-      const data = await res.json();
-      if (data.success) {
-        setUser((prev) => ({ ...prev, ...data.data }));
-        return { success: true };
-      }
-      return { success: false, error: data.error };
-    } catch (err) {
-      return { success: false, error: 'Server update failed' };
-    }
-  };
+  const updateProfile = (profileData) =>
+    handleUpdateProfile(profileData, token, setUser);
 
-  const toggleFavorite = async (landId) => {
-    if (!token) return { success: false, error: 'Please login to save favorites' };
-    try {
-      const res = await fetch(`${API_URL}/auth/favorites/${landId}`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = await res.json();
-      if (data.success) {
-        setUser((prev) => ({ ...prev, favorites: data.favorites }));
-        return { success: true };
-      }
-      return { success: false, error: data.error };
-    } catch (err) {
-      return { success: false, error: 'Failed to update favorites' };
-    }
-  };
+  const toggleFavorite = (landId) =>
+    handleToggleFavorite(landId, token, setUser);
 
-  const toggleDarkMode = () => setDarkMode(!darkMode);
-
+  // ── Provide state and actions ──────────────────────────────────────────────
   return (
     <AuthContext.Provider
       value={{

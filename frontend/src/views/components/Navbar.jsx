@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import { Sun, Moon, Menu, X, User, LogOut, Compass, PlusCircle, LayoutDashboard, LandPlot, ChevronDown, Phone, ArrowRight } from 'lucide-react';
 
 export default function Navbar() {

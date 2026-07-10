@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import MapView from '../components/MapView';
 import { MapPin, Maximize, Calendar, Eye, Send, ArrowLeft, ShieldCheck, Mail, Phone, Heart, ChevronUp, ChevronDown } from 'lucide-react';
 import io from 'socket.io-client';
