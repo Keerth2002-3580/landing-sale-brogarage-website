@@ -95,7 +95,7 @@ export default function VerifiedSellers() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#0a0f0d] transition-colors">
+    <div className="min-h-screen bg-[#edf6f2] dark:bg-[#07130e] transition-colors">
 
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
       <div className="relative overflow-hidden pt-32 pb-20" style={{ background: '#001a0f' }}>
